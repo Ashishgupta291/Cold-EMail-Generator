@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cold EMail Generator</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <script>
+        function copyEmail(index) {
+            const emailContent = document.getElementById('email-content').innerText;
+            navigator.clipboard.writeText(emailContent).then(function() {
+                console.log("copied");
+            }, function(err) {
+                console.log("failed to copy");
+            });
+        }
+    </script>
+    
+    <br>
+    <div class="container">
+        <h1>📧 Cold EMail Generator</h1>
+        <form id="email-form" method="post" enctype="multipart/form-data">
+            <label for="url">Enter a Job URL:</label>
+            <input type="text" id="url" name="url" placeholder="https://jobs.nitmz.ac.in/job/R-42328?from=job%20search%20funnel" required>
+            <!-- test = https://jobs.nike.com/job/R-42328?from=job%20search%20funnel -->
+            <button type="submit" id="submit-button" >Submit</button>
+        </form>
+        <div id="email-output">
+            {% if mail %}
+                    <h3>Generated Email:</h3>    
+                    <div class="email-block">
+                        <div id="email-content">{{ mail }}</div>
+                        <button class="copy-button" onclick="copyEmail()">Copy</button>
+                    </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <script>
+
+       let form = document.getElementById("email-form");
+       form.addEventListener("submit", function(event) {
+        var sub = document.getElementById('submit-button');
+          sub.disabled = true;
+          sub.innerHTML = "Wait!!";
+          sub.style.backgroundColor = "green";
+
+       });
+    </script>
+</body>
+</html>
